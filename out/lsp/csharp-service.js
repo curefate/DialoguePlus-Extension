@@ -71,7 +71,9 @@ class CSharpAnalysisService {
                                     let location = null;
                                     if (Array.isArray(positions) && positions.length > 0) {
                                         const pos = positions[0];
-                                        location = vscode_languageserver_1.Location.create(vscode_uri_1.URI.file(pos.FilePath).toString(), vscode_languageserver_1.Range.create(vscode_languageserver_1.Position.create(pos.StartLine, pos.StartColumn), vscode_languageserver_1.Position.create(pos.EndLine, pos.EndColumn)));
+                                        // pos.FilePath is already a URI string from C#, don't convert it again
+                                        location = vscode_languageserver_1.Location.create(pos.FilePath, // Use directly, already a URI
+                                        vscode_languageserver_1.Range.create(vscode_languageserver_1.Position.create(pos.StartLine, pos.StartColumn), vscode_languageserver_1.Position.create(pos.EndLine, pos.EndColumn)));
                                     }
                                     // Resolve only the specific request with matching ID
                                     if (result.Id && this.definitionRequests.has(result.Id)) {

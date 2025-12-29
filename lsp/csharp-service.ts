@@ -65,8 +65,9 @@ export class CSharpAnalysisService {
                                     let location: Location | null = null;
                                     if (Array.isArray(positions) && positions.length > 0) {
                                         const pos = positions[0];
+                                        // pos.FilePath is already a URI string from C#, don't convert it again
                                         location = Location.create(
-                                            URI.file(pos.FilePath).toString(),
+                                            pos.FilePath,  // Use directly, already a URI
                                             Range.create(
                                                 Position.create(pos.StartLine, pos.StartColumn),
                                                 Position.create(pos.EndLine, pos.EndColumn)
