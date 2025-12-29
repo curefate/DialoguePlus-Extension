@@ -1,16 +1,22 @@
-# DS Scripts Support README
+# DialoguePlus Extension README
 
-This is an extension that adds many support functions for [DS](https://github.com/curefate/DialogueScripter) language scripts.
+This is an extension that adds many support functions for [DP](https://github.com/curefate/DialogueScripter) language scripts.
 
 Feel free to [contribute](https://github.com/curefate/dialoguescripter-extension), thanks for any feedback. ;D
 
 ## Features
+
 ### Syntax Highlighting (with a nice theme!)
-![](images/1.gif)
+
+![]()
+
 ### Error Check
-![](images/2.gif)
+
+![]()
+
 ### Definition jumping
-![](images/3.gif)
+
+![]()
 
 ## Requirements
 

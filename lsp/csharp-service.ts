@@ -31,7 +31,7 @@ export class CSharpAnalysisService {
             windowsHide: true
         });
 
-        this.connection.console.log(`[DS] C# process started (PID: ${this.process.pid})`);
+        this.connection.console.log(`[DP] C# process started (PID: ${this.process.pid})`);
 
         this.process.stdout?.on('data', (data: Buffer) => {
             this.buffer += data.toString();
@@ -44,7 +44,7 @@ export class CSharpAnalysisService {
                     try {
                         const result = JSON.parse(line);
                         if (result.Error) {
-                            this.connection.console.error(`[DS] Analysis error: ${result.Error}`);
+                            this.connection.console.error(`[DP] Analysis error: ${result.Error}`);
                             this.clearRequests(new Error(result.Error));
                         } else {
                             switch (result.Type) {
@@ -69,24 +69,24 @@ export class CSharpAnalysisService {
                                     }
                                     break;
                                 default:
-                                    this.connection.console.error(`[DS] Unknown result type: ${result.Type}`);
+                                    this.connection.console.error(`[DP] Unknown result type: ${result.Type}`);
                                     break;
                             }
                         }
                     } catch (err) {
-                        this.connection.console.error(`[DS] JSON parse error: ${err}, data: ${line}`);
+                        this.connection.console.error(`[DP] JSON parse error: ${err}, data: ${line}`);
                     }
                 }
             }
         });
 
         this.process.on('exit', (err) => {
-            this.connection.console.error(`[DS] C# process exited, error: ${err}`);
+            this.connection.console.error(`[DP] C# process exited, error: ${err}`);
             this.scheduleRestart();
         });
 
         this.process.on('error', (err) => {
-            this.connection.console.error(`[DS] C# process error: ${err}`);
+            this.connection.console.error(`[DP] C# process error: ${err}`);
             this.scheduleRestart();
         });
     }
@@ -110,14 +110,14 @@ export class CSharpAnalysisService {
 
     private scheduleRestart(): void {
         if (this.restartAttempts >= this.maxRestartAttempts) {
-            this.connection.console.error('[DS] Max restart attempts reached. Giving up.');
+            this.connection.console.error('[DP] Max restart attempts reached. Giving up.');
             this.clearRequests(new Error('C# process unavailable'));
             return;
         }
 
         this.restartAttempts++;
         setTimeout(() => {
-            this.connection.console.log(`[DS] Restarting C# process (attempt ${this.restartAttempts})`);
+            this.connection.console.log(`[DP] Restarting C# process (attempt ${this.restartAttempts})`);
             this.spawnProcess();
         }, this.restartDelayMs);
     }
@@ -165,7 +165,7 @@ export class CSharpAnalysisService {
                 end: { line: d.Line >= 0 ? d.Line : 0, character: Math.max(d.Column >= 0 ? d.Column : 0, 0) + 1 }
             },
             message: d.Message || 'unknown error',
-            source: 'ds',
+            source: 'dp',
             severity: d.Severity || 1
         }));
     }
@@ -181,7 +181,7 @@ export class CSharpAnalysisService {
         };
         this.process?.stdin?.write(JSON.stringify(payload) + '\n', (err) => {
             if (err) {
-                this.connection.console.error(`[DS] Failed to send incremental update: ${err}`);
+                this.connection.console.error(`[DP] Failed to send incremental update: ${err}`);
             }
         });
     }
@@ -195,7 +195,7 @@ export class CSharpAnalysisService {
         };
         this.process?.stdin?.write(JSON.stringify(payload) + '\n', (err) => {
             if (err) {
-                this.connection.console.error(`[DS] Failed to send open file: ${err}`);
+                this.connection.console.error(`[DP] Failed to send open file: ${err}`);
             }
         });
     }
@@ -208,7 +208,7 @@ export class CSharpAnalysisService {
         };
         this.process?.stdin?.write(JSON.stringify(payload) + '\n', (err) => {
             if (err) {
-                this.connection.console.error(`[DS] Failed to send close file: ${err}`);
+                this.connection.console.error(`[DP] Failed to send close file: ${err}`);
             }
         });
     }

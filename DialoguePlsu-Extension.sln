@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSService", "DSService.csproj", "{9AD1B000-A308-4DF4-A9F3-E6E16F5B185E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPService", "DPService\DPService.csproj", "{7B5D71AF-FCDB-2151-7C24-F0E4A8B59703}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,15 +10,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9AD1B000-A308-4DF4-A9F3-E6E16F5B185E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AD1B000-A308-4DF4-A9F3-E6E16F5B185E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AD1B000-A308-4DF4-A9F3-E6E16F5B185E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AD1B000-A308-4DF4-A9F3-E6E16F5B185E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B5D71AF-FCDB-2151-7C24-F0E4A8B59703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B5D71AF-FCDB-2151-7C24-F0E4A8B59703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B5D71AF-FCDB-2151-7C24-F0E4A8B59703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B5D71AF-FCDB-2151-7C24-F0E4A8B59703}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7ACC7500-7C78-496F-A8B5-1F5F39DA6BE4}
+		SolutionGuid = {4AA5C263-474D-4F23-BE96-A26A353D2541}
 	EndGlobalSection
 EndGlobal

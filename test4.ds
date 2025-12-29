@@ -1,5 +1,0 @@
-import test5.ds
-
-label a:
-    "hello a"
-jump b

@@ -25,22 +25,22 @@ export function activate(context: ExtensionContext) {
     };
 
     const clientOptions: LanguageClientOptions = {
-        documentSelector: [{ scheme: 'file', language: 'ds' }],
+        documentSelector: [{ scheme: 'file', language: 'dp' }],
         synchronize: {
-            fileEvents: workspace.createFileSystemWatcher('**/.ds')
+            fileEvents: workspace.createFileSystemWatcher('**/.dp')
         }
     };
 
     client = new LanguageClient(
-        'dsLanguageServer',
-        'DS Language Server',
+        'dpLanguageServer',
+        'DP Language Server',
         serverOptions,
         clientOptions
     );
 
     client.onDidChangeState(event => {
         if (event.newState === State.Stopped) {
-            window.showErrorMessage('[DS] Language Server stopped unexpectedly.');
+            window.showErrorMessage('[DP] Language Server stopped unexpectedly.');
         }
     });
 

@@ -1,10 +1,10 @@
 {
-  "name": "ds-scripts-support",
-  "displayName": "DS Scripts Support",
+  "name": "dp-extension",
+  "displayName": "DialoguePlus Extension",
   "publisher": "majulizi",
   "icon": "icon.png",
   "description": "",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.102.0"
   },
@@ -19,29 +19,22 @@
   "contributes": {
     "languages": [
       {
-        "id": "ds",
+        "id": "dp",
         "aliases": [
-          "DS script",
-          "ds"
+          "DP script",
+          "dp"
         ],
         "extensions": [
-          ".ds"
+          ".dp"
         ],
         "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
       {
-        "language": "ds",
-        "scopeName": "source.ds",
-        "path": "./syntaxes/ds.tmLanguage.json"
-      }
-    ],
-    "themes": [
-      {
-        "label": "DialogueScripter Theme",
-        "uiTheme": "vs-dark",
-        "path": "./themes/dialoguescripter-color-theme.json"
+        "language": "dp",
+        "scopeName": "source.dp",
+        "path": "./syntaxes/dp.tmLanguage.json"
       }
     ]
   },
@@ -60,10 +53,10 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "build-server": "cd DSService && dotnet publish -c Release -o ../ds-service/win-x64",
-    "build-win-x64": "cd DSService && dotnet publish -c Release -r win-x64 -o ../ds-service/win-x64",
-    "build-linux-x64": "cd DSService && dotnet publish -c Release -r linux-x64 -o ../ds-service/linux-x64",
-    "build-osx-x64": "cd DSService && dotnet publish -c Release -r osx-x64 -o ../ds-service/osx-x64",
-    "build-osx-arm64": "cd DSService && dotnet publish -c Release -r osx-arm64 -o ../ds-service/osx-arm64"
+    "build-server": "cd DPService && dotnet publish -c Release -o ../dp-service/win-x64",
+    "build-win-x64": "cd DPService && dotnet publish -c Release -r win-x64 -o ../dp-service/win-x64",
+    "build-linux-x64": "cd DPService && dotnet publish -c Release -r linux-x64 -o ../dp-service/linux-x64",
+    "build-osx-x64": "cd DPService && dotnet publish -c Release -r osx-x64 -o ../dp-service/osx-x64",
+    "build-osx-arm64": "cd DPService && dotnet publish -c Release -r osx-arm64 -o ../dp-service/osx-arm64"
   }
 }

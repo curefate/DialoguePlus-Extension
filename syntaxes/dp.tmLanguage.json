@@ -1,9 +1,9 @@
 {
-    "scopeName": "source.ds",
+    "scopeName": "source.dp",
     "fileTypes": [
-        ".ds"
+        ".dp"
     ],
-    "name": "DialogueScripter",
+    "name": "DialoguePlus",
     "patterns": [
         {
             "include": "#keywords"
@@ -40,7 +40,7 @@
         "keywords": {
             "patterns": [
                 {
-                    "name": "keyword.control.ds",
+                    "name": "keyword.control.dp",
                     "match": "\\b(if|elif|else|not|and|or|call|import|label|jump|tour)\\b|->|-><|~"
                 }
             ]
@@ -48,7 +48,7 @@
         "import-paths": {
             "patterns": [
                 {
-                    "name": "string.unquoted.path.ds",
+                    "name": "string.unquoted.path.dp",
                     "match": "(?<=(import)\\s)[a-zA-Z0-9_./\\\\-]+"
                 }
             ]
@@ -56,7 +56,7 @@
         "label-names": {
             "patterns": [
                 {
-                    "name": "entity.name.label.ds",
+                    "name": "entity.name.label.dp",
                     "match": "(?<=(label|jump|tour)\\s)[a-zA-Z_][a-zA-Z0-9_]*"
                 }
             ]
@@ -64,7 +64,7 @@
         "speaker-names": {
             "patterns": [
                 {
-                    "name": "entity.name.speaker.ds",
+                    "name": "entity.name.speaker.dp",
                     "match": "^\\s*[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*\")"
                 }
             ]
@@ -72,7 +72,7 @@
         "tags": {
             "patterns": [
                 {
-                    "name": "entity.name.tag.ds",
+                    "name": "entity.name.tag.dp",
                     "match": "@[a-zA-Z_][a-zA-Z0-9_]*"
                 }
             ]
@@ -80,7 +80,7 @@
         "operators": {
             "patterns": [
                 {
-                    "name": "keyword.operator.ds",
+                    "name": "keyword.operator.dp",
                     "match": "(\\+|\\-|\\*|/|%|=|==|!=|<=|>=|\\+=|\\-=|\\*=|/=|%=|&&|\\|\\||!|<|>|:|\\(|\\)|\\{|\\}|,)"
                 }
             ]
@@ -88,7 +88,7 @@
         "call-functions": {
             "patterns": [
                 {
-                    "name": "entity.name.function.ds",
+                    "name": "entity.name.function.dp",
                     "match": "(?<=call\\s)[a-zA-Z_][a-zA-Z0-9_]*"
                 }
             ]
@@ -96,15 +96,15 @@
         "literals": {
             "patterns": [
                 {
-                    "name": "constant.language.boolean.ds",
+                    "name": "constant.language.boolean.dp",
                     "match": "\\b(true|false)\\b"
                 },
                 {
-                    "name": "constant.numeric.ds",
+                    "name": "constant.numeric.dp",
                     "match": "-?\\d+(\\.\\d+)?"
                 },
                 {
-                    "name": "variable.other.ds",
+                    "name": "variable.other.dp",
                     "match": "\\$([a-zA-Z_][a-zA-Z0-9_]*.)?[a-zA-Z_][a-zA-Z0-9_]*"
                 }
             ]
@@ -112,34 +112,34 @@
         "strings": {
             "patterns": [
                 {
-                    "name": "string.quoted.double.ds",
+                    "name": "string.quoted.double.dp",
                     "begin": "\"",
                     "end": "\"",
                     "patterns": [
                         {
-                            "name": "constant.character.escape.ds",
+                            "name": "constant.character.escape.dp",
                             "match": "\\\\([btnfr'\"\\\\]|{{|}})"
                         },
                         {
-                            "name": "meta.embedded.ds",
+                            "name": "meta.embedded.dp",
                             "begin": "\\{",
                             "end": "\\}",
                             "patterns": [
                                 {
-                                    "name": "string.quoted.double.embedded.ds",
+                                    "name": "string.quoted.double.embedded.dp",
                                     "begin": "\"",
                                     "end": "\""
                                 },
                                 {
-                                    "name": "meta.function-call.ds",
+                                    "name": "meta.function-call.dp",
                                     "begin": "\\b(call)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\(",
                                     "end": "\\)",
                                     "beginCaptures": {
                                         "1": {
-                                            "name": "keyword.control.ds"
+                                            "name": "keyword.control.dp"
                                         },
                                         "2": {
-                                            "name": "entity.name.function.embedded.ds"
+                                            "name": "entity.name.function.embedded.dp"
                                         }
                                     },
                                     "patterns": [
@@ -172,7 +172,7 @@
         "comments": {
             "patterns": [
                 {
-                    "name": "comment.line.number-sign.ds",
+                    "name": "comment.line.number-sign.dp",
                     "begin": "#",
                     "end": "$"
                 }
