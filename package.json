@@ -57,6 +57,7 @@
     "build-win-x64": "cd DPService && dotnet publish -c Release -r win-x64 -o ../dp-service/win-x64",
     "build-linux-x64": "cd DPService && dotnet publish -c Release -r linux-x64 -o ../dp-service/linux-x64",
     "build-osx-x64": "cd DPService && dotnet publish -c Release -r osx-x64 -o ../dp-service/osx-x64",
-    "build-osx-arm64": "cd DPService && dotnet publish -c Release -r osx-arm64 -o ../dp-service/osx-arm64"
+    "build-osx-arm64": "cd DPService && dotnet publish -c Release -r osx-arm64 -o ../dp-service/osx-arm64",
+    "build-all-platforms": "npm run build-win-x64 && npm run build-linux-x64 && npm run build-osx-x64 && npm run build-osx-arm64"
   }
 }

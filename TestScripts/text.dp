@@ -1,6 +1,6 @@
 import text2.dp
 
-label A
+label A:
     me "Hello! #blablabla"
     "This is a \n test script!"
     speaker "1 plus 1 plus 1 equals {1+1+1} !"

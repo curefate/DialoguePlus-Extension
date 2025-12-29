@@ -1,4 +1,4 @@
 import text.dp
 
 label C:
-    "{$global.haha}
+    "{$global.haha}"

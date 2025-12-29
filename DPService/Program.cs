@@ -72,32 +72,66 @@ class Program
                             if (filePath == null) break;
 
                             Console.Error.WriteLine($"[DS C#] Analyzing file: {filePath}.");
+                            Console.Error.WriteLine($"[DS C#] Request ID: {id}");
 
-                            var result = _compiler.Compile(filePath);
-
-                            // Map diagnostics to ensure proper JSON format
-                            // Compiler uses 1-based line numbers, LSP uses 0-based, so subtract 1
-                            var diagnostics = result.Diagnostics.Select(d => new DiagnosticResponse
+                            try
                             {
-                                Message = d.Message,
-                                Line = Math.Max(0, d.Line - 1),  // Convert 1-based to 0-based
-                                Column = Math.Max(0, d.Column - 1),  // Convert 1-based to 0-based
-                                Span = d.Span.HasValue ? new TextSpanResponse
+                                Console.Error.WriteLine($"[DS C#] Starting compilation...");
+                                var result = _compiler.Compile(filePath);
+                                Console.Error.WriteLine($"[DS C#] Compilation finished successfully.");
+
+                                // Map diagnostics to ensure proper JSON format
+                                // Compiler uses 1-based line numbers, LSP uses 0-based, so subtract 1
+                                Console.Error.WriteLine($"[DS C#] Mapping {result.Diagnostics.Count} diagnostics...");
+                                var diagnostics = result.Diagnostics.Select(d => new DiagnosticResponse
                                 {
-                                    StartLine = Math.Max(0, d.Span.Value.StartLine - 1),  // Convert 1-based to 0-based
-                                    StartColumn = Math.Max(0, d.Span.Value.StartColumn - 1),  // Convert 1-based to 0-based
-                                    EndLine = Math.Max(0, d.Span.Value.EndLine - 1),  // Convert 1-based to 0-based
-                                    EndColumn = Math.Max(0, d.Span.Value.EndColumn - 1)  // Convert 1-based to 0-based
-                                } : null,
-                                Severity = (int)d.Severity
-                            }).ToArray();
+                                    Message = d.Message,
+                                    Line = Math.Max(0, d.Line - 1),  // Convert 1-based to 0-based
+                                    Column = Math.Max(0, d.Column - 1),  // Convert 1-based to 0-based
+                                    Span = d.Span.HasValue ? new TextSpanResponse
+                                    {
+                                        StartLine = Math.Max(0, d.Span.Value.StartLine - 1),  // Convert 1-based to 0-based
+                                        StartColumn = Math.Max(0, d.Span.Value.StartColumn - 1),  // Convert 1-based to 0-based
+                                        EndLine = Math.Max(0, d.Span.Value.EndLine - 1),  // Convert 1-based to 0-based
+                                        EndColumn = Math.Max(0, d.Span.Value.EndColumn - 1)  // Convert 1-based to 0-based
+                                    } : null,
+                                    Severity = (int)d.Severity
+                                }).ToArray();
 
-                            Console.WriteLine(JsonSerializer.Serialize(new ReturnResult
+                                Console.Error.WriteLine($"[DS C#] Analysis complete. Found {diagnostics.Length} diagnostics.");
+
+                                var response = JsonSerializer.Serialize(new ReturnResult
+                                {
+                                    Type = "AnalyzeResult",
+                                    Id = id,  // Include the request ID in the response
+                                    Diagnostics = diagnostics
+                                });
+                                
+                                Console.WriteLine(response);
+                                Console.Out.Flush();  // Force flush to ensure output is sent immediately
+                            }
+                            catch (Exception compileEx)
                             {
-                                Type = "AnalyzeResult",
-                                Id = id,  // Include the request ID in the response
-                                Diagnostics = diagnostics
-                            }));
+                                Console.Error.WriteLine($"[DS C#] Compilation error: {compileEx.Message}");
+                                Console.Error.WriteLine($"[DS C#] Stack trace: {compileEx.StackTrace}");
+                                
+                                // Send back an error response so the request doesn't timeout
+                                var errorResponse = JsonSerializer.Serialize(new ReturnResult
+                                {
+                                    Type = "AnalyzeResult",
+                                    Id = id,
+                                    Diagnostics = [new DiagnosticResponse
+                                    {
+                                        Message = $"Compilation failed: {compileEx.Message}",
+                                        Line = 0,
+                                        Column = 0,
+                                        Severity = 1  // Error
+                                    }]
+                                });
+                                
+                                Console.WriteLine(errorResponse);
+                                Console.Out.Flush();  // Force flush
+                            }
                             break;
                         }
                     case "definition":
