@@ -43,13 +43,6 @@ namespace DialoguePlus.Compilation
             _cache = cache ?? new ConcurrentDictionary<Uri, SourceContent>();
         }
 
-        public bool TryGetValue(Uri uri, out string content)
-        {
-            _cache.TryGetValue(uri, out var sourceContent);
-            content = sourceContent?.Text;
-            return sourceContent != null;
-        }
-
         public bool CanHandle(Uri uri) => _cache.ContainsKey(uri);
 
         public Task<bool> ExistsAsync(Uri uri, CancellationToken ct = default)
@@ -57,6 +50,17 @@ namespace DialoguePlus.Compilation
 
         public Task<SourceContent> OpenTextAsync(Uri uri, CancellationToken ct = default)
             => Task.FromResult(_cache[uri]);
+
+        public bool TryGetValue(Uri uri, out string text)
+        {
+            if (_cache.TryGetValue(uri, out var content))
+            {
+                text = content.Text;
+                return true;
+            }
+            text = null!;
+            return false;
+        }
 
         public void AddOrUpdate(Uri uri, string text)
             => _cache.AddOrUpdate(uri, new SourceContent(text), (_, __) => new SourceContent(text));

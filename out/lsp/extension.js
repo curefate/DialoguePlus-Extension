@@ -16,15 +16,15 @@ function activate(context) {
         }
     };
     const clientOptions = {
-        documentSelector: [{ scheme: 'file', language: 'ds' }],
+        documentSelector: [{ scheme: 'file', language: 'dp' }],
         synchronize: {
-            fileEvents: vscode_1.workspace.createFileSystemWatcher('**/.ds')
+            fileEvents: vscode_1.workspace.createFileSystemWatcher('**/.dp')
         }
     };
-    client = new node_1.LanguageClient('dsLanguageServer', 'DS Language Server', serverOptions, clientOptions);
+    client = new node_1.LanguageClient('dpLanguageServer', 'DP Language Server', serverOptions, clientOptions);
     client.onDidChangeState(event => {
         if (event.newState === node_1.State.Stopped) {
-            vscode_1.window.showErrorMessage('[DS] Language Server stopped unexpectedly.');
+            vscode_1.window.showErrorMessage('[DP] Language Server stopped unexpectedly.');
         }
     });
     client.start();

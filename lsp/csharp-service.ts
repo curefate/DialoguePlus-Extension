@@ -50,22 +50,37 @@ export class CSharpAnalysisService {
                             switch (result.Type) {
                                 case 'AnalyzeResult':
                                     const diags = this.mapDiagnostics(result.Diagnostics || []);
-                                    this.resolveAnalyzeRequests(diags);
+                                    // Resolve only the specific request with matching ID
+                                    if (result.Id && this.analyzeRequests.has(result.Id)) {
+                                        const request = this.analyzeRequests.get(result.Id);
+                                        this.analyzeRequests.delete(result.Id);
+                                        request?.resolve(diags);
+                                    } else {
+                                        // Fallback: resolve all if no ID match (shouldn't happen)
+                                        this.resolveAnalyzeRequests(diags);
+                                    }
                                     break;
                                 case 'DefinitionResult':
                                     const positions = result.Positions;
+                                    let location: Location | null = null;
                                     if (Array.isArray(positions) && positions.length > 0) {
                                         const pos = positions[0];
-                                        const location = Location.create(
+                                        location = Location.create(
                                             URI.file(pos.FilePath).toString(),
                                             Range.create(
                                                 Position.create(pos.StartLine, pos.StartColumn),
                                                 Position.create(pos.EndLine, pos.EndColumn)
                                             )
                                         );
-                                        this.resolveDefinitionRequests(location);
+                                    }
+                                    // Resolve only the specific request with matching ID
+                                    if (result.Id && this.definitionRequests.has(result.Id)) {
+                                        const request = this.definitionRequests.get(result.Id);
+                                        this.definitionRequests.delete(result.Id);
+                                        request?.resolve(location);
                                     } else {
-                                        this.resolveDefinitionRequests(null);
+                                        // Fallback: resolve all if no ID match (shouldn't happen)
+                                        this.resolveDefinitionRequests(location);
                                     }
                                     break;
                                 default:
@@ -159,15 +174,31 @@ export class CSharpAnalysisService {
     }
 
     private mapDiagnostics(diags: any[]): Diagnostic[] {
-        return diags.map(d => ({
-            range: {
-                start: { line: d.Line >= 0 ? d.Line : 0, character: d.Column >= 0 ? d.Column : 0 },
-                end: { line: d.Line >= 0 ? d.Line : 0, character: Math.max(d.Column >= 0 ? d.Column : 0, 0) + 1 }
-            },
-            message: d.Message || 'unknown error',
-            source: 'dp',
-            severity: d.Severity || 1
-        }));
+        return diags.map(d => {
+            // Use Span if available for better range highlighting, fallback to Line/Column
+            let range: Range;
+            if (d.Span) {
+                range = Range.create(
+                    Position.create(d.Span.StartLine, d.Span.StartColumn),
+                    Position.create(d.Span.EndLine, d.Span.EndColumn)
+                );
+            } else {
+                // Fallback: use Line/Column and highlight at least 1 character
+                const line = Math.max(0, d.Line || 0);
+                const col = Math.max(0, d.Column || 0);
+                range = Range.create(
+                    Position.create(line, col),
+                    Position.create(line, col + 1)
+                );
+            }
+            
+            return {
+                range: range,
+                message: d.Message || 'Unknown error',
+                severity: d.Severity || 1,
+                source: 'DialoguePlus'
+            };
+        });
     }
 
     public onUpdate(
@@ -250,3 +281,4 @@ export class CSharpAnalysisService {
 
     }
 }
+
