@@ -8,15 +8,15 @@ Feel free to [contribute](https://github.com/curefate/dialoguescripter-extension
 
 ### Syntax Highlighting (with a nice theme!)
 
-![]()
+![](/images/1.gif)
 
 ### Error Check
 
-![]()
+![](/images/3.gif)
 
 ### Definition jumping
 
-![]()
+![](/images/2.gif)
 
 ## Requirements
 
