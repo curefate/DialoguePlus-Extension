@@ -1,8 +1,8 @@
 # DialoguePlus Extension README
 
-This is an extension that adds many support functions for [DP](https://github.com/curefate/DialogueScripter) language scripts.
+This is an extension that adds many support functions for [D+](https://github.com/curefate/DialoguePlus.git) scripts.
 
-Feel free to [contribute](https://github.com/curefate/dialoguescripter-extension), thanks for any feedback. ;D
+[contribute](https://github.com/curefate/DialoguePlus-Extension.git), thanks for any feedback.
 
 ## Features
 
