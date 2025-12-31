@@ -6,6 +6,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [v1.0.1] - 2025.12.31
+
+### Changed
+
+- Change Icon
+
 ## [v1.0.0] - 2025.12.31
 
 - I know it's wired jump from 0.0.1 to 1.0.0
