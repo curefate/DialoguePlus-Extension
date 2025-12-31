@@ -2,7 +2,11 @@
 
 This is an extension that adds many support functions for [D+](https://github.com/curefate/DialoguePlus.git) scripts.
 
-[contribute](https://github.com/curefate/DialoguePlus-Extension.git), thanks for any feedback.
+[Reposity](https://github.com/curefate/DialoguePlus-Extension.git).
+
+ExtensionID: majulizi.dp-extension
+
+Thanks for any feedback.
 
 ## Features
 
