@@ -1,15 +1,39 @@
 using System.Collections.Concurrent;
 
-namespace DialoguePlus.Compilation
+namespace DialoguePlus.Core
 {
+    /// <summary>
+    /// Represents the content of a source file.
+    /// </summary>
+    /// <param name="Text">The text content of the source file.</param>
     public sealed record SourceContent(
         string Text
     );
 
+    /// <summary>
+    /// Interface for content providers that can load source files from different sources (file system, cache, HTTP, etc.).
+    /// </summary>
     public interface IContentProvider
     {
+        /// <summary>
+        /// Determines whether this provider can handle the specified URI scheme.
+        /// </summary>
+        /// <param name="uri">The URI to check.</param>
+        /// <returns>True if this provider can handle the URI; otherwise, false.</returns>
         bool CanHandle(Uri uri);
+        /// <summary>
+        /// Checks whether a source file exists at the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI to check.</param>
+        /// <param name="ct">Cancellation token.</param>
+        /// <returns>True if the source exists; otherwise, false.</returns>
         Task<bool> ExistsAsync(Uri uri, CancellationToken ct = default);
+        /// <summary>
+        /// Opens and reads the text content from the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI of the source to read.</param>
+        /// <param name="ct">Cancellation token.</param>
+        /// <returns>The source content.</returns>
         Task<SourceContent> OpenTextAsync(Uri uri, CancellationToken ct = default);
     }
 
@@ -26,7 +50,7 @@ namespace DialoguePlus.Compilation
                 throw new FileNotFoundException($"File not found: {uri.LocalPath}");
             using var fs = File.OpenRead(uri.LocalPath);
             using var sr = new StreamReader(fs, detectEncodingFromByteOrderMarks: true);
-            var text = await sr.ReadToEndAsync(ct);
+            var text = await sr.ReadToEndAsync().ConfigureAwait(false);
             var info = new FileInfo(uri.LocalPath);
             return new SourceContent(
                 text
@@ -88,13 +112,13 @@ namespace DialoguePlus.Compilation
         public async Task<bool> ExistsAsync(string sourceId, CancellationToken ct = default)
         {
             var uri = Normalize(sourceId);
-            return await GetProvider(uri).ExistsAsync(uri, ct);
+            return await GetProvider(uri).ExistsAsync(uri, ct).ConfigureAwait(false);
         }
 
         public async Task<SourceContent> GetTextAsync(string sourceId, CancellationToken ct = default)
         {
             var uri = Normalize(sourceId);
-            return await GetProvider(uri).OpenTextAsync(uri, ct);
+            return await GetProvider(uri).OpenTextAsync(uri, ct).ConfigureAwait(false);
         }
 
         private static Uri Normalize(string idOrPath)

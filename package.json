@@ -4,7 +4,7 @@
   "publisher": "majulizi",
   "icon": "icon.png",
   "description": "",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "engines": {
     "vscode": "^1.102.0"
   },
@@ -58,6 +58,7 @@
     "build-linux-x64": "cd DPService && dotnet publish -c Release -r linux-x64 -o ../dp-service/linux-x64",
     "build-osx-x64": "cd DPService && dotnet publish -c Release -r osx-x64 -o ../dp-service/osx-x64",
     "build-osx-arm64": "cd DPService && dotnet publish -c Release -r osx-arm64 -o ../dp-service/osx-arm64",
-    "build-all-platforms": "npm run build-win-x64 && npm run build-linux-x64 && npm run build-osx-x64 && npm run build-osx-arm64"
+    "build-all-platforms": "npm run build-win-x64 && npm run build-linux-x64 && npm run build-osx-x64 && npm run build-osx-arm64",
+    "package": "npx vsce package"
   }
 }

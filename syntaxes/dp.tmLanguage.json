@@ -118,7 +118,15 @@
                     "patterns": [
                         {
                             "name": "constant.character.escape.dp",
-                            "match": "\\\\([btnfr'\"\\\\]|{{|}})"
+                            "match": "\u007b\u007b|\u007d\u007d"
+                        },
+                        {
+                            "name": "invalid.illegal.unmatched-brace.dp",
+                            "match": "\u007d"
+                        },
+                        {
+                            "name": "constant.character.escape.dp",
+                            "match": "\\\\([btnfr'\"\\\\])"
                         },
                         {
                             "name": "meta.embedded.dp",
